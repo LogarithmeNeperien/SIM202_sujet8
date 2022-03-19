@@ -524,7 +524,7 @@ int comptage_intersection(const Segment& seg,const Obstacle& obst)
     {
         //&& !(point_segment(seg_milieu,segments_obst[i].P2,0))
         //on regarde si le segment prolongé a tapé un agnle
-        if( intersection_segment(seg_milieu,segments_obst[i],0.1,0)  && !(point_segment(seg_milieu,segments_obst[i].P2,0)) )
+        if( intersection_segment(seg_milieu,segments_obst[i],0,0)  && !(point_segment(seg_milieu,segments_obst[i].P2,0)) )
         {
             comptage_intersect++;
         }
@@ -552,7 +552,7 @@ bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone)
             nombre_coins_obstacle++;
         }
 
-        if(intersection_segment(seg,*it,0.1,0))
+        if(intersection_segment(seg,*it,0,0))
         {
             return false;
         }
@@ -716,7 +716,7 @@ vector<Obstacle> reading(char* nom_fichier){
 void write_graphe(const Graph& graphe)
 {
     ofstream myfile;
-    myfile.open("graphe3.txt");
+    myfile.open("graphe_padding.txt");
 
     myfile << graphe.nb_arcs << "\n" << endl;
 
@@ -878,7 +878,7 @@ vector<Point> dijkstra(const Graph& graphe)
 void write_optimal_path(const vector<Point>& points_du_chemin)
 {
     ofstream myfile;
-    myfile.open("path.txt");
+    myfile.open("path_padding.txt");
 
     vector<Point>::const_iterator it;
 

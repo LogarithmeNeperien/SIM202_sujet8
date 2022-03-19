@@ -10,13 +10,33 @@ int main()
 
     char* nom_fichier = (char*)"obs4.txt";
     const vector<Obstacle> vect_obst = reading(nom_fichier);
+
     const Obstacle ob1 = vect_obst[0];
+    const Obstacle ob2 = vect_obst[1];
     cout << ob1 << endl;
+    cout << ob2 << endl;
 
-    Obstacle ob_test = transformation_padding(ob1,0.5);
+    Obstacle ob_padding1 = transformation_padding(ob1,0.5);
 
-    cout << ob_test << endl;
+    Obstacle ob_padding2 = transformation_padding(ob2,0.5);
 
+    Point A = Point(-2,1.5);
+
+	Point B = Point(8,2.5);
+
+	const vector<Obstacle> vect_obst_padding = {ob_padding1,ob_padding2};
+
+    Graph graphe = Graph(2,vect_obst_padding,A,B);
+
+    write_graphe(graphe);
+
+
+    vector<Point> points_du_chemin = dijkstra(graphe);
+
+    write_optimal_path(points_du_chemin);
+
+
+    /*
     ofstream myfile_obst;
     myfile_obst.open("padding.txt");
 
@@ -31,6 +51,8 @@ int main()
         myfile_obst << (*it).x << " " << (*it).y << endl;
     }
     myfile_obst.close();
+    */
+
 
     /*
     double rr=0.1;
