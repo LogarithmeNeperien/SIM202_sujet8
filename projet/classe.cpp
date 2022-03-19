@@ -158,7 +158,7 @@ segment* obstacle ::liste_segment()
     return(liste_arretes);
 }
 */
-
+//C'est P1 qui est sur le segment
 Segment normale_au_milieu(const Segment& S1)
 {
     Point P1=S1.P1;
@@ -488,16 +488,13 @@ vector<Point> normales_ext(const Obstacle& ob)
             }
         }
 
-        cout << cand1 << endl;
-        cout << "comptage = " << comptage << endl;
-
         if(comptage % 2 == 1)
         {
             normales.push_back( candidat1 * (1/norme(candidat1)) );
         }
         else
         {
-            normales.push_back( candidat1 * (1/norme(candidat1)) );
+            normales.push_back( candidat2 * (1/norme(candidat2)) );
         }
 
         cout << *it << endl;
@@ -913,60 +910,90 @@ Obstacle transformation_padding(const Obstacle& Ob,double R)
 {
 
     int nb_sommets=Ob.nbsom;
-    const vector<Segment> segments_obst = Ob.segments_of_obstacle();
+    //const vector<Segment> segments_obst = Ob.segments_of_obstacle();
     const vector<Point> points_obs=Ob.sommets;
-    vector<Point> sommets_coin(8*nb_sommets,Point());
-    vector<Segment> S(nb_sommets,Segment());
+    vector<Point> sommets_coin;
+    //vector<Segment> S(nb_sommets,Segment());
     vector<Point> v=normales_ext(Ob);
+
+    /*
     for(int i=0;i<nb_sommets;++i)
     {
-        Point P0=Point(0,0);
-        Point P1=Point(0,0);
-        Segment S0=Segment(P0,P1);
         S[i]=segments_obst[i]+v[i]*R;
         //printf("S[%d]=((%lf,%lf)et(%lf,%lf))\n",i,S[i].P1.x,S[i].P1.y,S[i].P2.x,S[i].P2.y);
     }
-    int nbsom=8*nb_sommets;
-    Segment S1;
-    Segment S2;
-    Point P;
-    double x;
-    double y;
-    double xa;
-    double ya;
-    double xb;
-    double yb;
-    Point B;
-    Segment S3;
-    Point P2;
-    for(int j=0;j<nb_sommets;++j)
-    {
-        S1=segments_obst[j];
-        S2=segments_obst[j+1];
-        P2=S[j].P2;
-        xa=points_obs[j].x;
-        ya=points_obs[j].y;
-        xb=xa+1;
-        yb=ya;
-        //printf("(xa,ya)=(%lf,%lf)\n",xa,ya);
-        B=Point(xb,yb);
-        S3=Segment(B,P2);
-        double theta=acos(produit_scalaire(S1,S2)/(norme(S1)*norme(S2)));
-        //double cos_theta_0=produit_scalaire(S3,S2)/(norme(S1)*norme(S3));
-        double cos_theta_0=produit_scalaire(S3,S2)/(norme(S2)*norme(S3));
-        double sin_theta_0=sqrt((1-(cos_theta_0)*(cos_theta_0)));
-        //printf("j,theta,cos_theta_0,sin_theta_0=(%d,%lf,%lf,%lf)\n",j,theta,cos_theta_0,sin_theta_0);
-        for(int k=0; k<8;++k)
-        {
-            x=Ob.sommets[j].x+R*cos(theta*k/8)*cos_theta_0;
-            y=Ob.sommets[j].y+R*sin(theta*k/8)*sin_theta_0;
+    */
 
-            P=Point(x,y);
-            sommets[8*j+k]=P;
+    Segment seg_g;
+    Segment seg_d;
+
+    Segment normale_g;
+    Segment normale_d;
+
+    double theta = 0;
+
+    for(int j=0; j<nb_sommets; ++j)
+    {
+        if(j==0)
+        {
+             normale_g = Segment(points_obs[0],points_obs[0] + v[0]*R);
+
+             normale_d = Segment(points_obs[0],points_obs[0] + v[nb_sommets-1]*R);
+
+            //normale_d et normale_g sont de normes R
+            theta=acos(produit_scalaire(normale_d,normale_g) / (R*R) );
+
         }
+        else
+        {
+
+            normale_g = Segment(points_obs[j],points_obs[j] + v[j]*R);
+            normale_d = Segment(points_obs[j],points_obs[j] + v[j-1]*R);
+
+            //normale_d et normale_g sont de normes R
+            theta=acos(produit_scalaire(normale_d,normale_g) / (R*R) );
+
+
+        }
+
+        sommets_coin.push_back(normale_d.P2);
+
+
+        for(int k=1;k<7;++k)
+        {
+            Segment normale_normale_d = normale_point(normale_d,normale_d.P2);
+
+
+            //normale_normale_d.P2 = normale_normale_d.P2 * (-1);
+
+            Point vect = normale_normale_d.P2 - normale_normale_d.P1;
+
+
+            vect = vect * (1/norme(vect));
+
+
+            normale_normale_d.P2 = normale_normale_d.P1 + vect;
+
+            cout << "normale unitaire : " << normale_normale_d << endl;
+
+            Point normale_d_unit = (normale_d.P2 - normale_d.P1) * (1 / norme(normale_d.P2 - normale_d.P1));
+            Point angle = (normale_d_unit) * (R*cos(theta/7)) + (vect) * (R*sin(theta/7)) ;
+
+            cout << "point_angle : " << angle <<endl;
+
+            Point angle_final = angle + points_obs[j];
+
+            sommets_coin.push_back(angle_final);
+
+            normale_d = Segment(points_obs[j],angle_final);
+        }
+
+        sommets_coin.push_back(normale_g.P2);
+
     }
-    Obstacle O=Obstacle(nbsom,sommets);
-    //printf("Bonjour3\n");
-    return(O);
+
+    Obstacle obs_padding = Obstacle(8*nb_sommets,sommets_coin);
+
+    return(obs_padding);
 }
 

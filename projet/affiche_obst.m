@@ -1,6 +1,6 @@
-fileID = fopen('obstacles3.txt','r');
+fileID = fopen('obstacles4.txt','r');
 formatSpec = '%f %f';
-sizeA = [2 5];
+sizeA = [2 6];
 
 A = fscanf(fileID,formatSpec,sizeA);
 
@@ -20,6 +20,7 @@ fclose(fileID);
 
 figure; 
 hold on;
+axis equal;
 
 ob1 = polyshape(A(1,:),A(2,:));
 plot(ob1);

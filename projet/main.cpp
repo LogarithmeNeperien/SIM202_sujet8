@@ -6,10 +6,33 @@ using namespace std ;
 int main()
 {
 
-    char* nom_fichier = (char*)"obs3.txt";
+
+
+    char* nom_fichier = (char*)"obs4.txt";
     const vector<Obstacle> vect_obst = reading(nom_fichier);
     const Obstacle ob1 = vect_obst[0];
     cout << ob1 << endl;
+
+    Obstacle ob_test = transformation_padding(ob1,0.5);
+
+    cout << ob_test << endl;
+
+    ofstream myfile_obst;
+    myfile_obst.open("padding.txt");
+
+
+    vector<Point>::iterator it;
+
+    myfile_obst << ob_test.nbsom << endl;
+
+
+    for(it=ob_test.sommets.begin();it!=ob_test.sommets.end();++it)
+    {
+        myfile_obst << (*it).x << " " << (*it).y << endl;
+    }
+    myfile_obst.close();
+
+    /*
     double rr=0.1;
     Obstacle OO=transformation_padding(ob1,rr);
     cout<<OO<<endl;
@@ -27,6 +50,8 @@ int main()
         myfile_obst << (*it).x << " " << (*it).y << endl;
     }
     myfile_obst.close();
+    */
+
     /*
 	cout << "Hello world!" << endl;
 	Point P1=Point(0,3);
