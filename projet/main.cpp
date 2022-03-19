@@ -5,6 +5,28 @@ using namespace std ;
 
 int main()
 {
+
+    char* nom_fichier = (char*)"obs3.txt";
+    const vector<Obstacle> vect_obst = reading(nom_fichier);
+    const Obstacle ob1 = vect_obst[0];
+    cout << ob1 << endl;
+    double rr=0.1;
+    Obstacle OO=transformation_padding(ob1,rr);
+    cout<<OO<<endl;
+
+    ofstream myfile_obst;
+    myfile_obst.open("padding.txt");
+
+
+    vector<Point>::iterator it;
+
+    myfile_obst << OO.nbsom << endl;
+
+    for(it=OO.sommets.begin();it!=OO.sommets.end();++it)
+    {
+        myfile_obst << (*it).x << " " << (*it).y << endl;
+    }
+    myfile_obst.close();
     /*
 	cout << "Hello world!" << endl;
 	Point P1=Point(0,3);
@@ -16,11 +38,13 @@ int main()
 	Point P7 =Point(6,2);
 	Point P8 = Point(4,2);
 
+
+
 	*/
 
-	Point A = Point(-1,1);
+	//Point A = Point(-1,1);
 
-	Point B = Point(5,0);
+	//Point B = Point(5,0);
 
 	//Segment test = Segment(A,B);
 
@@ -34,7 +58,7 @@ int main()
 	//Segment S2=Segment(P1,P2);
 
 
-	char* nom_fichier = (char*)"obs3.txt";
+	//char* nom_fichier = (char*)"obs3.txt";
 
 
 	//cout << S1 << S2 << endl;
@@ -74,6 +98,7 @@ int main()
 
     //cout << ob1 << ob2 << endl;
 
+    /*
     const vector<Obstacle> vect_obst = reading(nom_fichier);
 
 
@@ -89,6 +114,7 @@ int main()
     cout << normales[3];
     cout << normales[4];
 
+    */
     //cout << vect_obst[0] << vect_obst[1] << vect_obst[2] << endl;
 
 

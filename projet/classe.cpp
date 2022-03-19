@@ -539,8 +539,6 @@ int comptage_intersection(const Segment& seg,const Obstacle& obst)
 //renvoie true si le segment est valide par rapport à l'obstacle passé en paramètre
 bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone)
 {
-
-
     const vector<Segment> segments = polygone.segments_of_obstacle();
     vector<Segment>::const_iterator it;
 
@@ -896,3 +894,79 @@ void write_optimal_path(const vector<Point>& points_du_chemin)
     myfile.close();
 
 }
+
+
+
+double distance_point_segment(const Point& A, const Segment& S)
+{
+    Segment P1A=Segment(S.P1,A);
+    Segment P1P2=Segment(S.P1,S.P2);
+
+    double P1H=produit_scalaire(P1A,P1P2)/(norme(P1P2));
+    printf("P1H:%lf\n",P1H);
+    double AH=sqrt(norme(P1A)*norme(P1A)-P1H*P1H);
+    return(AH);
+}
+
+
+Obstacle transformation_padding(const Obstacle& Ob,double R)
+{
+
+    int nb_sommets=Ob.nbsom;
+    const vector<Segment> segments_obst = Ob.segments_of_obstacle();
+    const vector<Point> points_obs=Ob.sommets;
+    vector<Point> sommets_coin(8*nb_sommets,Point());
+    vector<Segment> S(nb_sommets,Segment());
+    vector<Point> v=normales_ext(Ob);
+    for(int i=0;i<nb_sommets;++i)
+    {
+        Point P0=Point(0,0);
+        Point P1=Point(0,0);
+        Segment S0=Segment(P0,P1);
+        S[i]=segments_obst[i]+v[i]*R;
+        //printf("S[%d]=((%lf,%lf)et(%lf,%lf))\n",i,S[i].P1.x,S[i].P1.y,S[i].P2.x,S[i].P2.y);
+    }
+    int nbsom=8*nb_sommets;
+    Segment S1;
+    Segment S2;
+    Point P;
+    double x;
+    double y;
+    double xa;
+    double ya;
+    double xb;
+    double yb;
+    Point B;
+    Segment S3;
+    Point P2;
+    for(int j=0;j<nb_sommets;++j)
+    {
+        S1=segments_obst[j];
+        S2=segments_obst[j+1];
+        P2=S[j].P2;
+        xa=points_obs[j].x;
+        ya=points_obs[j].y;
+        xb=xa+1;
+        yb=ya;
+        //printf("(xa,ya)=(%lf,%lf)\n",xa,ya);
+        B=Point(xb,yb);
+        S3=Segment(B,P2);
+        double theta=acos(produit_scalaire(S1,S2)/(norme(S1)*norme(S2)));
+        //double cos_theta_0=produit_scalaire(S3,S2)/(norme(S1)*norme(S3));
+        double cos_theta_0=produit_scalaire(S3,S2)/(norme(S2)*norme(S3));
+        double sin_theta_0=sqrt((1-(cos_theta_0)*(cos_theta_0)));
+        //printf("j,theta,cos_theta_0,sin_theta_0=(%d,%lf,%lf,%lf)\n",j,theta,cos_theta_0,sin_theta_0);
+        for(int k=0; k<8;++k)
+        {
+            x=Ob.sommets[j].x+R*cos(theta*k/8)*cos_theta_0;
+            y=Ob.sommets[j].y+R*sin(theta*k/8)*sin_theta_0;
+
+            P=Point(x,y);
+            sommets[8*j+k]=P;
+        }
+    }
+    Obstacle O=Obstacle(nbsom,sommets);
+    //printf("Bonjour3\n");
+    return(O);
+}
+

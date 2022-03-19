@@ -44,6 +44,8 @@ bool point_segment(const Segment& S,const Point& P,double eps);
 bool point_segment1(const Segment& S,const Point& P,double eps);
 bool intersection_segment(Segment seg1,Segment seg2,double epsilon);
 
+double distance_point_segment(const Point& A, const Segment& S);
+
 ostream & operator <<(ostream &, const Segment&);
 
 
@@ -91,6 +93,10 @@ bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone);
 Segment translater_exterieur(const Segment& seg,double r,const Obstacle& ob);
 
 vector<Point> normales_ext(const Obstacle& ob);
+
+Obstacle transformation_padding(const Obstacle& Ob,double R);
+
+
 
 class Arc
 {
