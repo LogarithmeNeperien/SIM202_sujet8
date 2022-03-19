@@ -1,0 +1,67 @@
+Obstacle transformation_padding(const Obstacle& Ob,double R)
+{
+
+    int nb_sommets=Ob.nbsom;
+    const vector<Segment> segments_obst = Ob.segments_of_obstacle();
+    const vector<Point> points_obs=Ob.sommets;
+    vector<Point> sommets(8*nb_sommets,Point());
+    vector<Segment> S(nb_sommets,Segment());
+    vector<Point> v=normales_ext(Ob);
+    for(int i=0;i<nb_sommets;++i)
+    {
+        S[i]=segments_obst[i]+v[i]*R;
+        printf("S[%d]=((%lf,%lf)et(%lf,%lf))\n",i,S[i].P1.x,S[i].P1.y,S[i].P2.x,S[i].P2.y);
+    }
+    int nbsom=8*nb_sommets;
+    Segment S1;
+    Segment S2;
+    Point P;
+    double x;
+    double y;
+    double xa;
+    double ya;
+    double xb;
+    double yb;
+    Point B;
+    Segment S3;
+    Point P2;
+    for(int j=0;j<nb_sommets;++j)
+    {
+
+        /*
+        S1=segments_obst[j];
+        S2=segments_obst[j+1];
+        */
+        S1=Segment(points_obs[j],S[j].P1);
+        if(j==0){
+            S2=Segment(points_obs[j],S[nb_sommets-1].P2);
+        }else{
+            S2=Segment(points_obs[j],S[j-1].P2);
+        }
+        printf("S1=((%lf,%lf)et(%lf,%lf))\n",S1.P1.x,S1.P1.y,S1.P2.x,S1.P2.y);
+        printf("S2=((%lf,%lf)et(%lf,%lf))\n",S2.P1.x,S2.P1.y,S2.P2.x,S2.P2.y);
+        P2=S[j].P2;
+        xa=points_obs[j].x;
+        ya=points_obs[j].y;
+        xb=xa+1;
+        yb=ya;
+        printf("(xa,ya)=(%lf,%lf)\n",xa,ya);
+        B=Point(xb,yb);
+        printf("(xb,yb)=(%lf,%lf)\n",xb,yb);
+        S3=Segment(B,P2);
+        printf("S3=((%lf,%lf)et(%lf,%lf))\n",S3.P1.x,S3.P1.y,S3.P2.x,S3.P2.y);
+        double theta=acos(produit_scalaire(S1,S2)/(norme(S1)*norme(S2)));
+        double cos_theta_0=produit_scalaire(S3,S2)/(norme(S2)*norme(S3));
+        double sin_theta_0=sqrt((1-(cos_theta_0)*(cos_theta_0)));
+        printf("j,theta,cos_theta_0,sin_theta_0=(%d,%lf,%lf,%lf)\n",j,theta,cos_theta_0,sin_theta_0);
+        for(int k=0; k<8;++k)
+        {
+            x=Ob.sommets[j].x+R*cos(theta*k/7)*cos_theta_0;
+            y=Ob.sommets[j].y+R*sin(theta*k/7)*sin_theta_0;
+            P=Point(x,y);
+            sommets[8*j+k]=P;
+        }
+    }
+    Obstacle O=Obstacle(nbsom,sommets);
+    return(O);
+}
