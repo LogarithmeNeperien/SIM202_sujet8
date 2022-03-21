@@ -2,6 +2,7 @@
 #define graph_hpp
 
 #include "geometry.hpp"
+#include "advanced_tools.hpp"
 
 class Arc
 {
@@ -31,7 +32,7 @@ class Graph
 
 bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone);
 int comptage_intersection(const Segment& seg,const Obstacle& obst);
-bool intersection_segment(const Segment& seg1,const Segment& seg2, double epsilon,double eps);
+//bool intersection_segment(const Segment& seg1,const Segment& seg2, double epsilon,double eps);
 
 ostream & operator <<(ostream &, const Graph &);
 

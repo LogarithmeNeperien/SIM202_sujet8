@@ -262,7 +262,7 @@ vector<Point> dijkstra(const Graph& graphe)
 
           Point point_a_retirer = graphe.liste_sommets[i_min];
 
-          //cout << point_a_retirer << endl;
+        cout << point_a_retirer << endl;
 
           T.erase(remove(T.begin(), T.end(), point_a_retirer), T.end());
 

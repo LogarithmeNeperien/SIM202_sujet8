@@ -28,15 +28,17 @@ class Point
         return *this;
     }
 };
+
+// Operator overload
 Point operator+(const Point& P1,const Point& P2);
-
 Point operator-(const Point& P1,const Point& P2);
-
 Point operator*(const Point& P, double a);
 bool operator == (const Point& P1,const Point& P2);
 bool operator != (const Point& P1,const Point& P2);
-double distance(const Point& P1, const Point& P2);
 ostream & operator <<(ostream &, const Point&);
+
+
+double distance(const Point& P1, const Point& P2);
 
 class Segment
 {
@@ -51,24 +53,18 @@ class Segment
 
 };
 
+// Operator overload
 bool operator ==(const Segment& , const Segment&);
 Segment operator+(const Segment& S,const Point& P);
+ostream & operator <<(ostream &, const Segment&);
 
+// Simple Geometry operations
 double produit_scalaire(const Segment& S1,const Segment& S2);
 double produit_vectoriel(const Segment& S1,const Segment& S2);
 double arclength(const Segment& S1,const Segment& S2);
 double cos2deg(double angle);
 double norme(const Segment& S1);
-Segment normale_au_milieu(const Segment& S1);
-Segment normale(const Segment& S1);
-Segment normale_point(const Segment& S1,const Point& P);
 Segment projection(const Point& P,const Segment& S);
-
-bool point_segment(const Segment& S,const Point& P,double eps);
-bool point_segment1(const Segment& S,const Point& P,double eps);
-bool intersection_segment(const Segment& seg1,const Segment& seg2,double epsilon,double eps);
-
-ostream & operator <<(ostream &, const Segment&);
 
 class Obstacle
 {
@@ -87,7 +83,4 @@ class Obstacle
 };
 
 ostream& operator<<(ostream& os,const Obstacle& ob);
-vector<Point> normales_ext(const Obstacle& ob);
-Obstacle transformation_padding(const Obstacle& Ob,double R);
-double angle_normal(const Point& P);
 #endif
