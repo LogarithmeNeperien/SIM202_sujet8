@@ -1,5 +1,6 @@
 <h1>Compilation</h1>
 <h3>Basique (sans padding)</h3>
+<b>g++ </b>
 <h3>Avec padding circulaire</h3>
 <h3>Test de la classe complex_hull</h3>
 
