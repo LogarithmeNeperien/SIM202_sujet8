@@ -1,3 +1,8 @@
+<h1>Compilation</h1>
+<h3>Basique (sans padding)</h3>
+<h3>Avec padding circulaire</h3>
+<h3>Test de la classe complex_hull</h3>
+
 <h1>Description des fonctions</h1>
 <h2> 1) Geometry</h2>
 <p>Le fichier geometry.cpp/hpp contient toutes les classes élémentaires de géométrie (<b>Point</b>, <b>Segment</b>, <b>Obstacle</b>,...), ainsi que les fonctions associées
