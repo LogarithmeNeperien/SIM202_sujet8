@@ -6,12 +6,17 @@ vector<Obstacle> reading(char* nom_fichier){
 	vector<Obstacle> list_obstacles;
 	Obstacle ob(0,{});
 	ifstream infile(nom_fichier);
+
 	string line;
+
+	// Balise rencontrées dans le fichier texte
 	string obs("/");
 	string comment("%");
 	string end("#");
+
 	int nb_obs = 0;
 	double a,b;
+
 	while(getline(infile,line))
 	{
 		if (line[0] == obs[0]){
@@ -31,10 +36,8 @@ vector<Obstacle> reading(char* nom_fichier){
 		Point p(a,b);
 		ob+=p;
 	}
+	
 	list_obstacles.push_back(ob);
-	cout << "Nb obstacles " <<list_obstacles.size() << endl;
 	infile.close();
-	printf("fin lecture \n");
-
 	return list_obstacles;
 }

@@ -45,11 +45,12 @@ class Segment
     public:
     Point P1, P2;
     Segment(const Point& pa=Point(),const Point& pb=Point());
-    Segment& operator+=(const Point& P){
+    Segment& operator+=(const Point& P)
+    { //translation du segment dans la direction de P
         P1+=P;
         P2+=P;
         return *this;
-    }; //translation du segment dans la direction de P
+    }; 
 
 };
 
@@ -72,7 +73,7 @@ class Obstacle
     int nbsom;
     vector<Point> sommets;
     Obstacle();
-    Obstacle(int ns,const vector<Point> &obstacle_points); /*: n bsom(0){sommets=new Point[ns];}*/
+    Obstacle(int ns,const vector<Point> &obstacle_points);
     Obstacle(const Obstacle& ob);
     ~Obstacle();
     Obstacle& operator=(const Obstacle& ob);

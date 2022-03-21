@@ -14,6 +14,13 @@ class Arc
 };
 ostream& operator<<(ostream& os,const Arc& A);
 
+// Check if an edge intersect an obstacle
+bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone);
+
+// Check how many times an edge intersect the same obstacle
+int comptage_intersection(const Segment& seg,const Obstacle& obst);
+
+// Check if an edge is not going through any obstacle
 bool is_arc_valide(const Segment& seg,const vector<Obstacle> & vect_obstacles, int nb_obstacles);
 
 
@@ -29,13 +36,9 @@ class Graph
     ~Graph();
 
 };
-
-bool intersection_segment_polygon(const Segment& seg,const Obstacle& polygone);
-int comptage_intersection(const Segment& seg,const Obstacle& obst);
-//bool intersection_segment(const Segment& seg1,const Segment& seg2, double epsilon,double eps);
-
 ostream & operator <<(ostream &, const Graph &);
 
+// Applies the standard Dijkstra algorithm
 vector<Point> dijkstra(const Graph& graphe);
 
 #endif

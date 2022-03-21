@@ -150,7 +150,6 @@ Obstacle::Obstacle(int ns,const vector<Point> &obstacle_points){
     }
 }
 
-
 Obstacle::Obstacle(const Obstacle& ob)
 {
     nbsom = ob.nbsom;
@@ -159,7 +158,6 @@ Obstacle::Obstacle(const Obstacle& ob)
         sommets.push_back(*it);
     }
 }
-
 
 Obstacle::~Obstacle()
 {

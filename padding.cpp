@@ -1,23 +1,13 @@
 #include "padding.hpp"
 
-
 Obstacle transformation_padding(const Obstacle& Ob,double R)
 {
 
     int nb_sommets=Ob.nbsom;
-    //const vector<Segment> segments_obst = Ob.segments_of_obstacle();
+    const vector<Segment> segments_obst = Ob.segments_of_obstacle();
     const vector<Point> points_obs=Ob.sommets;
     vector<Point> sommets_coin;
-    //vector<Segment> S(nb_sommets,Segment());
     vector<Point> v=normales_ext(Ob);
-
-    /*
-    for(int i=0;i<nb_sommets;++i)
-    {
-        S[i]=segments_obst[i]+v[i]*R;
-        //printf("S[%d]=((%lf,%lf)et(%lf,%lf))\n",i,S[i].P1.x,S[i].P1.y,S[i].P2.x,S[i].P2.y);
-    }
-    */
 
     Segment seg_g;
     Segment seg_d;
@@ -26,7 +16,7 @@ Obstacle transformation_padding(const Obstacle& Ob,double R)
     Segment normale_d;
 
     double theta = 0;
-    int nonconvexe;
+    int nonconvexe=0;
     double a_d,a_g,b_d,b_g,x_intersection,y_intersection;
     Point inter;
 
@@ -60,14 +50,7 @@ Obstacle transformation_padding(const Obstacle& Ob,double R)
 
 
         }
-        //printf("Etape %d\n",j);
-        //printf("normale_d=((%lf,%lf)et(%lf,%lf))\n",normale_d.P1.x,normale_d.P1.y,normale_d.P2.x,normale_d.P2.y);
-        //printf("normale_g=((%lf,%lf)et(%lf,%lf))\n",normale_g.P1.x,normale_g.P1.y,normale_g.P2.x,normale_g.P2.y); 
-        //printf("seg_g=((%lf,%lf)et(%lf,%lf))\n",seg_g.P1.x,seg_g.P1.y,seg_g.P2.x,seg_g.P2.y);
-        //printf("seg_d=((%lf,%lf)et(%lf,%lf))\n",seg_d.P1.x,seg_d.P1.y,seg_d.P2.x,seg_d.P2.y);
-
-        sommets_coin.push_back(normale_d.P2);
-
+        
         if(intersection_segment(seg_g,seg_d,0.01,0.01))
         {
             nonconvexe+=1;
@@ -86,35 +69,27 @@ Obstacle transformation_padding(const Obstacle& Ob,double R)
                 a_d=(seg_d.P2.y-seg_d.P1.y)/(seg_d.P2.x-seg_d.P1.x);
                 b_d=seg_d.P2.y-a_d*seg_d.P2.x;
                 a_g=(seg_g.P2.y-seg_g.P1.y)/(seg_g.P2.x-seg_g.P1.x);
-                b_g=seg_g.P2.y-a_d*seg_g.P2.x;
+                b_g=seg_g.P2.y-a_g*seg_g.P2.x;
                 x_intersection=(b_g-b_d)/(a_d-a_g);
                 y_intersection=a_d*x_intersection+b_d;
             }
             inter=Point(x_intersection,y_intersection);
             sommets_coin.push_back(inter);
 
-        }else{   
+        }else{ 
+            sommets_coin.push_back(normale_d.P2);
             for(int k=1;k<7;++k)
             {
                 Segment normale_normale_d = normale_point(normale_d,normale_d.P2);
 
-
-                //normale_normale_d.P2 = normale_normale_d.P2 * (-1);
-
                 Point vect = normale_normale_d.P2 - normale_normale_d.P1;
-
 
                 vect = vect * (1/norme(vect));
 
-
                 normale_normale_d.P2 = normale_normale_d.P1 + vect;
-
-                //cout << "normale unitaire : " << normale_normale_d << endl;
 
                 Point normale_d_unit = (normale_d.P2 - normale_d.P1) * (1 / norme(normale_d.P2 - normale_d.P1));
                 Point angle = (normale_d_unit) * (R*cos(theta/7)) + (vect) * (R*sin(theta/7)) ;
-
-                //cout << "point_angle : " << angle <<endl;
 
                 Point angle_final = angle + points_obs[j];
 
@@ -122,10 +97,9 @@ Obstacle transformation_padding(const Obstacle& Ob,double R)
 
                 normale_d = Segment(points_obs[j],angle_final);
             }
-        sommets_coin.push_back(normale_g.P2);
+                sommets_coin.push_back(normale_g.P2);
         }
     }
-
     Obstacle obs_padding = Obstacle(8*(nb_sommets-nonconvexe)+nonconvexe,sommets_coin);
 
     return(obs_padding);

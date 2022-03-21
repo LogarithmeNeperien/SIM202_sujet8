@@ -14,8 +14,6 @@ bool intersection_segment(const Segment& seg1,const Segment& seg2, double epsilo
     }
     if(  abs( produit_scalaire(seg1,seg2) - norme(seg1)*norme(seg2) ) == 0 )
     {
-        //cout << seg1;
-        //cout << seg2;
         if(point_segment(seg2,point_a,epsilon) || point_segment(seg2,point_b,epsilon) ) //il n'y avait pas d'argument epsilon
         {
             return true;
@@ -35,21 +33,11 @@ bool intersection_segment(const Segment& seg1,const Segment& seg2, double epsilo
 
     if( (-eps <= alpha) && (alpha <= 1+eps) && (-eps <= beta) && (beta<= 1+eps))
     {
-        /*
-        printf("alpha = %lf\n",alpha);
-        printf("%beta = %lf\n",beta);
-        printf("Les deux segments s'intersectent\n");
-        */
         return true;
 
     }
     else
     {
-        /*
-        printf("alpha = %lf\n",alpha);
-        printf("%beta = %lf\n",beta);
-        printf("Les deux segments ne s'intersectent pas\n");
-        */
         return false;
     }
 
@@ -62,43 +50,30 @@ bool point_segment(const Segment& S,const Point& P,double eps)
     double x_E=S.P1.x+projete*(S.P2.x-S.P1.x)/norme(S);
     double y_E=S.P1.y+projete*(S.P2.y-S.P1.y)/norme(S);
     Point E=Point(x_E,y_E);
-    //cout << S << "norme : " << norme(S) <<endl;
-    //cout << E << endl;
     double d=distance(E,P);
-    //printf("d vaut %lf\n",d);
     if(d<=eps)
     {
         double MIN=min(S.P1.x,S.P2.x)-eps;
         double MAX=max(S.P1.x,S.P2.x)+eps;
-        if((MIN<=x_E)&&(MAX>=x_E))
-        {
-            //printf("Le Point est dans le segment\n");
-            return(true);
-        }
+        if((MIN<=x_E)&&(MAX>=x_E)) return true;
+        
     }
-    //printf("Le Point n'est pas dans le segment\n");
     return(false);
 }
 
-bool point_segment1(const Segment& S,const Point& P,double eps)
-{
-    double a=(S.P1.y-S.P2.y)/(S.P1.x-S.P2.x);
-    double b=a*S.P1.x-S.P1.y;
-    if((a*P.x+b+eps>=P.y)&(a*P.x+b-eps<=P.y))
-        {
-        double MIN=min(S.P1.y,S.P2.y)-eps;
-        double MAX=max(S.P1.y,S.P2.y)+eps;
-        if((MIN<=P.y)&&(MAX>=P.y))
-        {
-            printf("Le Point est dans le segment\n");
-            return(true);
-        }
-
-         }
-    printf("Le Point n'est pas dans le segment\n");
-    return(false);
-}
-
+// bool point_segment1(const Segment& S,const Point& P,double eps)
+// {
+//     double a=(S.P1.y-S.P2.y)/(S.P1.x-S.P2.x);
+//     double b=a*S.P1.x-S.P1.y;
+//     if((a*P.x+b+eps>=P.y)&(a*P.x+b-eps<=P.y))
+//         {
+//         double MIN=min(S.P1.y,S.P2.y)-eps;
+//         double MAX=max(S.P1.y,S.P2.y)+eps;
+//         if((MIN<=P.y)&&(MAX>=P.y)) return true;
+        
+//          }
+//     return(false);
+// }
 
 Segment normale_au_milieu(const Segment& S1)
 {
@@ -154,7 +129,6 @@ vector<Point> normales_ext(const Obstacle& ob)
 
     vector<Segment>::const_iterator it;
 
-
     for(it=segments.begin();it!=segments.end();++it)
     {
         Segment normale_non_translate = normale_au_milieu(*it);
@@ -174,11 +148,8 @@ vector<Point> normales_ext(const Obstacle& ob)
         Point candidat2 = normale_non_translate.P1 - normale_non_translate.P2;
 
         Point test_cand1 = (candidat1 * 100) + point_sur_segment;
-        Point test_cand2 = (candidat2 * 100) + point_sur_segment;
 
         Segment cand1 = Segment( point_sur_segment , test_cand1 );
-        Segment cand2 = Segment( point_sur_segment, test_cand2 );
-
 
         int comptage = 0;
 
@@ -190,19 +161,16 @@ vector<Point> normales_ext(const Obstacle& ob)
             }
         }
 
-        //cout << cand1 << endl;
-        //cout << "comptage = " << comptage << endl;
-
         if(comptage % 2 == 1)
         {
             normales.push_back( candidat1 * (1/norme(candidat1)) );
         }
         else
         {
-            normales.push_back( candidat1 * (1/norme(candidat1)) );
+            normales.push_back( candidat2 * (1/norme(candidat2)) );
         }
 
-        //cout << *it << endl;
+    
     }
 
 

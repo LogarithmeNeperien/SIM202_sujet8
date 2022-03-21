@@ -37,20 +37,3 @@ void write_optimal_path(const vector<Point>& points_du_chemin)
     myfile.close();
 
 }
-
-void write_optimal_path_padd(const vector<Point>& points_du_chemin)
-{
-    ofstream myfile;
-    myfile.open("path_padding.txt");
-
-    vector<Point>::const_iterator it;
-
-    myfile << points_du_chemin.size() << endl;
-
-    for(it=points_du_chemin.begin();it!=points_du_chemin.end();++it)
-    {
-        myfile << (*it).x << " " << (*it).y << endl;
-    }
-    myfile.close();
-
-}

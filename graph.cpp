@@ -131,7 +131,6 @@ Graph::Graph(int nb_obstacles ,const vector<Obstacle> & vect_obstacles,const Poi
     nb_arcs = (m*(m-1)/2);
     double length_p_k = 0;
 
-
     it_ob = vect_obstacles.begin();
 
     for(int k=0;k<m;++k)
@@ -150,16 +149,12 @@ Graph::Graph(int nb_obstacles ,const vector<Obstacle> & vect_obstacles,const Poi
             {
                 length_p_k = -1;
             }
-            //cout << segment_p_k << " distance : " << length_p_k;
             liste_arcs[nbr_arcs_crees] = Arc(Segment(liste_sommets[k],liste_sommets[p]),length_p_k);
             nbr_arcs_crees++;
-
-
         }
     }
 
 }
-
 Graph::~Graph()
 {
     if(liste_sommets != 0)  delete [] liste_sommets;
@@ -216,16 +211,6 @@ vector<Point> dijkstra(const Graph& graphe)
         }
     }
 
-    for(int i=0;i<n;++i)
-    {
-        for(int j=0;j<n;++j)
-        {
-            cout << c[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-
     vector<Point> S(n,Point());
     S[0] = graphe.liste_sommets[0];
 
@@ -235,15 +220,8 @@ vector<Point> dijkstra(const Graph& graphe)
         T.push_back(graphe.liste_sommets[j]);
     }
 
-
-
-
     while( !T.empty() )
     {
-          //vector<double>::iterator i_min = min_element(l.begin(),l.end());
-
-          //int i = distance(l.begin(), i_min);
-
           double l_min = inf;
           int i_min = -1;
 
@@ -259,10 +237,7 @@ vector<Point> dijkstra(const Graph& graphe)
             }
           }
 
-
           Point point_a_retirer = graphe.liste_sommets[i_min];
-
-        cout << point_a_retirer << endl;
 
           T.erase(remove(T.begin(), T.end(), point_a_retirer), T.end());
 
@@ -282,16 +257,7 @@ vector<Point> dijkstra(const Graph& graphe)
 
     }
 
-    for(int i=0;i<n;++i)
-    {
-        cout << l[i] << " ";
-    }
-    cout << "\n" <<endl;
-
-
     //on reconstruit le chemin du premier sommet au dernier sommet � partir de p
-
-
     Point depart_remonte = graphe.liste_sommets[n-1];
     vector<Point> points_chemin = {depart_remonte};
     vector<Point>::iterator it = find(S.begin(),S.end(),depart_remonte);
@@ -307,7 +273,7 @@ vector<Point> dijkstra(const Graph& graphe)
     }
 
     vector<Point>::iterator its;
-
+    cout << "Chemin optimal :" << endl;
     for(its=points_chemin.begin();its!=points_chemin.end();++its)
     {
         cout << *its;
