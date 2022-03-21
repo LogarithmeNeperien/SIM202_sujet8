@@ -3,10 +3,13 @@ Options de compilations :
 g++ main.cpp geometry.cpp advanced_tools.cpp graph.cpp write_graph.cpp file_reader.cpp -Wall
 2) Programme avec padding circulaire 
 g++ mainpadd.cpp geometry.cpp advanced_tools.cpp graph.cpp write_graph.cpp file_reader.cpp padding.cpp -Wall
-3) Test de la classe complex_hull
+3) Test de la classe complex_hull (n'utilise pas de fichier obs)
 g++ testCH.cpp geometry.cpp complex_hull.cpp
 
 Après compilation, vous pouvez au choix lancer le a.exe, qui utilisera par défaut
 la configuration obs2.txt, ou passer
 en ligne de commande la configuration souhaitée avec ./a.exe 'config/obs3.txt' pour
 la configuration 3 (voir dans config/ pour plus de configuration)
+
+Pour l'affichage, vous pouvez utiliser les fonctions affiche_config.m (MATLAB) pour le 1), affiche_config_padding.m (MATLAB) pour le 2)
+ou draw_config (OCTAVE) qui gère les 2.
