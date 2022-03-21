@@ -1,8 +1,8 @@
 Options de compilations :
-1) Programme de base (sans padding, objet simple)
+1) Programme de base (sans padding, objet ponctuel)
 g++ main.cpp geometry.cpp advanced_tools.cpp graph.cpp write_graph.cpp file_reader.cpp -Wall
 2) Programme avec padding circulaire 
-g++ main.cpp geometry.cpp advanced_tools.cpp graph.cpp write_graph.cpp file_reader.cpp padding.cpp -Wall
+g++ mainpadd.cpp geometry.cpp advanced_tools.cpp graph.cpp write_graph.cpp file_reader.cpp padding.cpp -Wall
 3) Test de la classe complex_hull
 g++ testCH.cpp geometry.cpp complex_hull.cpp
 
