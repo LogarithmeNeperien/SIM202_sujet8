@@ -1,0 +1,13 @@
+% Début et fin
+0 3
+4 -2
+% Premier obstacle
+/ 5
+0 0
+2 0
+2 6
+1 6
+1 2
+0 2
+% Deuxième obstacle
+ 
