@@ -716,7 +716,7 @@ vector<Obstacle> reading(char* nom_fichier){
 void write_graphe(const Graph& graphe)
 {
     ofstream myfile;
-    myfile.open("graphe_padding.txt");
+    myfile.open("graphe.txt");
 
     myfile << graphe.nb_arcs << "\n" << endl;
 
@@ -878,7 +878,7 @@ vector<Point> dijkstra(const Graph& graphe)
 void write_optimal_path(const vector<Point>& points_du_chemin)
 {
     ofstream myfile;
-    myfile.open("path_padding.txt");
+    myfile.open("path.txt");
 
     vector<Point>::const_iterator it;
 

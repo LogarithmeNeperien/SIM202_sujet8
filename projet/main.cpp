@@ -8,9 +8,10 @@ int main()
 
 
 
-    char* nom_fichier = (char*)"obs4.txt";
+    char* nom_fichier = (char*)"affiche_config_non_padding.txt";
     const vector<Obstacle> vect_obst = reading(nom_fichier);
 
+    /*
     const Obstacle ob1 = vect_obst[0];
     const Obstacle ob2 = vect_obst[1];
     cout << ob1 << endl;
@@ -19,14 +20,15 @@ int main()
     Obstacle ob_padding1 = transformation_padding(ob1,0.5);
 
     Obstacle ob_padding2 = transformation_padding(ob2,0.5);
+    */
 
-    Point A = Point(-2,1.5);
+    Point A = Point(1.8,3);
 
-	Point B = Point(8,2.5);
+	Point B = Point(6,4.5);
 
-	const vector<Obstacle> vect_obst_padding = {ob_padding1,ob_padding2};
+	//const vector<Obstacle> vect_obst_padding = {ob_padding1,ob_padding2};
 
-    Graph graphe = Graph(2,vect_obst_padding,A,B);
+    Graph graphe = Graph(6,vect_obst,A,B);
 
     write_graphe(graphe);
 
@@ -34,6 +36,7 @@ int main()
     vector<Point> points_du_chemin = dijkstra(graphe);
 
     write_optimal_path(points_du_chemin);
+
 
 
     /*
