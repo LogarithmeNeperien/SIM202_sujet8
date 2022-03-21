@@ -1,5 +1,4 @@
 % Début et fin
-% et ne
 1.8 3
 6 4.5
 % Debut liste obstacles
