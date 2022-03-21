@@ -8,27 +8,32 @@ int main()
 
 
 
-    char* nom_fichier = (char*)"affiche_config_non_padding.txt";
+    char* nom_fichier = (char*)"affiche_config_padding.txt";
     const vector<Obstacle> vect_obst = reading(nom_fichier);
 
-    /*
+
     const Obstacle ob1 = vect_obst[0];
     const Obstacle ob2 = vect_obst[1];
+    const Obstacle ob3 = vect_obst[2];
     cout << ob1 << endl;
-    cout << ob2 << endl;
+
 
     Obstacle ob_padding1 = transformation_padding(ob1,0.5);
-
     Obstacle ob_padding2 = transformation_padding(ob2,0.5);
-    */
 
-    Point A = Point(1.8,3);
 
-	Point B = Point(6,4.5);
+    Obstacle ob_padding3 = transformation_padding(ob3,0.5);
 
-	//const vector<Obstacle> vect_obst_padding = {ob_padding1,ob_padding2};
 
-    Graph graphe = Graph(6,vect_obst,A,B);
+
+
+    Point A = Point(-10,10);
+
+	Point B = Point(20,-20);
+
+	const vector<Obstacle> vect_obst_padding = {ob_padding1,ob_padding2,ob_padding3};
+
+    Graph graphe = Graph(3,vect_obst_padding,A,B);
 
     write_graphe(graphe);
 

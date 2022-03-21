@@ -1,7 +1,7 @@
-name_file = 'affiche_config_non_padding.txt';
-
+name_file = 'affiche_padding.txt';
 
 fileID = fopen(name_file,'r');
+
 
 fgetl(fileID);
 
@@ -30,7 +30,7 @@ end
 
 fclose(fileID);
 
-fileID = fopen('graphe.txt','r');
+fileID = fopen('graphe_padding.txt','r');
 formatSpec = '%f';
 size = [1 1];
 nb_arcs = fscanf(fileID,formatSpec,size);
@@ -49,7 +49,7 @@ end
 
 fclose(fileID);
 
-fileID = fopen('path.txt','r');
+fileID = fopen('path_padding.txt','r');
 
 nb_sommets_chemin = fscanf(fileID,formatSpec,[1 1]);
 
@@ -103,3 +103,11 @@ plot(path(1,:),path(2,:),'green');
 scatter(START(1),START(2),'red');
 
 scatter(END(1),END(2),'red');
+
+centers = path';
+
+m = length(centers);
+
+radii = ones(m,1)*0.5;
+ 
+viscircles(centers,radii,'LineWidth',0.1);
