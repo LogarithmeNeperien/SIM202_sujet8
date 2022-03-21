@@ -1,6 +1,8 @@
 #include "file_reader.hpp"
 
+
 vector<Obstacle> reading(char* nom_fichier){
+
 	vector<Obstacle> list_obstacles;
 	Obstacle ob(0,{});
 	ifstream infile(nom_fichier);
@@ -30,6 +32,7 @@ vector<Obstacle> reading(char* nom_fichier){
 		ob+=p;
 	}
 	list_obstacles.push_back(ob);
+	cout << "Nb obstacles " <<list_obstacles.size() << endl;
 	infile.close();
 	printf("fin lecture \n");
 
